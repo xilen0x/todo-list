@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ToDoItem from './todoitem';
+
 const ToDoList = props => {
     return (
         <div className="list-group">
@@ -12,22 +13,26 @@ const ToDoList = props => {
                             todo={todo}
                             key={i}
                             handleClickTrash={props.handleClickTrash}
+                            completeToDo={props.completeToDo}
                             pos={i}
                         />
                     )
                 })
                 :(
-                    <a href="#" className="list-group-item list-group-item-action text-center disabled">
-                        Lista de Tareas Vacia <br></br>
-                        Porfavor crear lista antes de agregar una tarea...
+                    <a href="/#" className="list-group-item list-group-item-action text-center disabled">
+                        Lista de Tareas Vacia <br />
+                        * Por favor crear lista antes de agregar una tarea...<br />
+                        <small>*Solo si la lista fue eliminada</small>
                     </a>
                 )
             }
         </div>
     )
 }
+
 ToDoList.propTypes = {
     todos: PropTypes.array.isRequired,
     handleClickTrash: PropTypes.func.isRequired
 }
+
 export default ToDoList;

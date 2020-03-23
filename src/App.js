@@ -4,7 +4,7 @@ import ToDoList from './components/todolist';
 import ToDoForm from './components/todoform';
 
 function App() {
-  const apiURL = 'https://assets.breatheco.de/apis/fake/todos/user/castorga';
+  const apiURL = 'https://assets.breatheco.de/apis/fake/todos/user/lrodriguez';
 
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
@@ -12,11 +12,11 @@ function App() {
   const [done, setDone] = useState("");
 
   const [todos, setTodo] = useState([
-    { label: 'Cras justo odio', done: false },
+    /*{ label: 'Cras justo odio', done: false },
     { label: 'Dapibus ac facilisis in', done: false },
     { label: 'Morbi leo risus', done: true },
     { label: 'Porta ac consectetur ac', done: false },
-    { label: 'Vestibulum at eros', done: true },
+    { label: 'Vestibulum at eros', done: true },*/
   ])
 
   const handleKeyDown = e => {
@@ -42,6 +42,11 @@ function App() {
   const handleClickTrash = pos => {
     //console.log("Eliminado la posicion: " + pos);
     todos.splice(pos, 1);
+    setTodo([...todos]);
+  }
+
+  const completeToDo = pos => {
+    todos[pos].done = !todos[pos].done;
     setTodo([...todos]);
   }
 
@@ -130,11 +135,6 @@ function App() {
     getTodos(apiURL);
   }, [])
 
-  const completeToDo = pos => {
-    todos[pos].done = !todos[pos].done;
-    setTodo([...todos]);
-  }
-  
   return (
     <>
       <div className="container">
@@ -146,16 +146,22 @@ function App() {
         {
           !!error &&
           (
-            <div class="alert alert-danger" role="alert">
+            <div className="alert alert-danger" role="alert">
               {error.msg}
+              <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
           )
         }
         {
           !!result &&
           (
-            <div class="alert alert-success" role="alert">
+            <div className="alert alert-success" role="alert">
               {result.result}
+              <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
           )
         }
@@ -193,7 +199,7 @@ function App() {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <ToDoList todos={todos} handleClickTrash={handleClickTrash} />
+            <ToDoList todos={todos} handleClickTrash={handleClickTrash} completeToDo={completeToDo} />
           </div>
         </div>
       </div>
